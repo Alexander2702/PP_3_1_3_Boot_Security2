@@ -20,10 +20,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public String homePage() {
-        return "user";
-    }
+//    @GetMapping("/")
+//    public String homePage() {
+//        return "user";
+//    }
 
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
