@@ -50,14 +50,14 @@ public class AdminController {
         return "redirect:/admin/";
     }
 
-    @GetMapping("/user-update/{id}")
+    @GetMapping("/{id}/edit")
     public String update(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userService.getUserById(id));
-        return "user-update";
+        return "user-list";
     }
 
-    @PatchMapping("/user-update/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
+    @PatchMapping("/{id}")
+    public String updateUser(@ModelAttribute("user") User user) {  //, @PathVariable("id") int id
         userService.updateUser(user);
         return "redirect:/admin/";
     }
