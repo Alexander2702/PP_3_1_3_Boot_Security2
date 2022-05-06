@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -57,7 +56,7 @@
             </div>
         </div>
 
-        <div class="col-10">
+        <div class="col-9">
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-tab1" role="tabpanel"
                      aria-labelledby="v-pills-home-tab"><h2>Admin panel</h2>
@@ -70,7 +69,7 @@
                         </div>
                     </nav>
 
-<!--                выводим всех юзеров-->
+                    <!--                выводим всех юзеров-->
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                              aria-labelledby="nav-home-tab">
@@ -84,7 +83,6 @@
                                             <th>First name</th>
                                             <th>Last name</th>
                                             <th>E-mail</th>
-                                            <!--                                        <th>Password</th>-->
                                             <th>ROLE</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
@@ -98,10 +96,14 @@
                                             <td th:text="${user.email}"></td>
                                             <td th:text="${user.roles}"></td>
 
-<!--                                            конпки edit и delete-->
+                                            <!--                                            конпки edit и delete-->
                                             <td>
-                                                <a class="btn btn-info" th:href="@{user-update/{id}(id=${user.id})}"
-                                                   type="submit">Edit</a>
+                                                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                                                    Edit
+                                                </button>
+
+<!--                                                <a class="btn btn-info" th:href="@{user-update/{id}(id=${user.id})}"-->
+<!--                                                   type="submit">Edit</a>-->
                                             </td>
                                             <td>
                                                 <form th:method="DELETE"
@@ -117,55 +119,72 @@
                             </div>
                         </div>
 
-<!--                    создаем нового юсера-->
+                        <!--                    создаем нового юсера-->
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel"
                              aria-labelledby="nav-profile-tab">
                             <div class="card">
                                 <h5 class="card-header">Add new user</h5>
-                                <div class="card-body">
-<!--                                    /admin/users-->
-                                    <form th:method="POST" th:action="@{/admin}" th:object="${user}" >
+                                <div class="card-body text-center ">
 
+                                    <form th:method="POST" th:action="@{/admin}" th:object="${newUser}">
+                                        <div class="flex-column align-items-center">
 
-                                        <div class="form-group col-md-3">
-                                            <label for="firstName">First name</label>
-                                            <input type="text" class="form-control"  id="firstName"
-                                                   aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Введите имя">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label for="lastName">Last name</label>
-                                            <input type="text" class="form-control" id="lastName" placeholder="Введите фамилию">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label for="password">Password</label>
-                                            <input type="password" class="form-control" id="password" placeholder="Введите пароль">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label for="email">Email</label>
-                                            <input type="email" class="form-control" id="email" placeholder="Введите Email">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label for="role">Role</label>
-                                            <select class="form-control" id="role">
-                                                <option>1</option>
-                                                <option>2</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-success">Add new user</button>
+                                            <div class="d-flex flex-column align-items-center mb-3">
+                                                <label for="firstName" class="font-weight-bold">First name</label>
+                                                <input type="text" class="form-control col-md-3" th:field="*{firstName}"
+                                                       id="firstName"
+                                                       aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                                       placeholder="Введите имя">
+                                            </div>
+
+                                            <div class="d-flex flex-column align-items-center mb-3">
+                                                <label for="firstName" class="font-weight-bold">Last name</label>
+                                                <input type="text" class="form-control col-md-3" th:field="*{lastName}"
+                                                       id="lastName"
+                                                       aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                                       placeholder="Введите фамилию">
+                                            </div>
+
+                                            <div class="d-flex flex-column align-items-center mb-3">
+                                                <label for="firstName" class="font-weight-bold">E-mail</label>
+                                                <input type="email" class="form-control col-md-3" th:field="*{email}"
+                                                       id="email"
+                                                       aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                                       placeholder="Введите email">
+                                            </div>
+
+                                            <div class="d-flex flex-column align-items-center mb-3">
+                                                <label for="firstName" class="font-weight-bold">Password</label>
+                                                <input type="password" class="form-control col-md-3"
+                                                       th:field="*{password}" id="password"
+                                                       aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                                       placeholder="Введите пароль">
+                                            </div>
+
+                                            <div class="d-flex flex-column align-items-center mb-3">
+                                                <label for="firstName" class="font-weight-bold">Role</label>
+
+                                                <select th:field="*{roles}" size="2" multiple
+                                                        class="form-control col-md-3"
+                                                        id="role">
+                                                    <option th:each="role : ${rolesList}"
+                                                            th:text="${role.getRolesUser()}"
+                                                            th:value="${role.getId()}">
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-success">Add new user</button>
+                                            </div>
                                         </div>
                                     </form>
-
-
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
-
                 </div>
-
                 <div class="tab-pane fade" id="v-pills-tab2" role="tabpanel"
                      aria-labelledby="v-pills-tab2-tab"><h2>User information-page</h2>
                 </div>
@@ -174,50 +193,26 @@
         </div>
     </div>
 </div>
-
-
-<!--<div class="tab-content" id="myTabContent1">-->
-<!--    <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="nav-admin-tab">-->
-<!--        <div th:switch="${userList}">-->
-<!--            <h2 th:case="null">No users found!</h2>-->
-<!--            <div th:case="*">-->
-<!--                <h2>Users</h2>-->
-<!--                <table>-->
-<!--                    <thead>-->
-<!--                    <tr>-->
-<!--                        <th>Id</th>-->
-<!--                        <th>First name</th>-->
-<!--                        <th>Last name</th>-->
-<!--                        <th>E-mail</th>-->
-<!--                        <th>Password</th>-->
-<!--                        <th>ROLE</th>-->
-
-<!--                    </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody>-->
-<!--                    <tr th:each="user : ${userList}">-->
-<!--                        <td th:text="${user.id}"></td>-->
-<!--                        <td th:text="${user.firstName}"></td>-->
-<!--                        <td th:text="${user.lastName}"></td>-->
-<!--                        <td th:text="${user.email}"></td>-->
-<!--                        <td th:text="${user.password}"></td>-->
-<!--                        <td th:text="${user.roles}"></td>-->
-
-<!--                        <td><a th:href="@{user-update/{id}(id=${user.id})}">Edit</a></td>-->
-<!--                        <td>-->
-<!--                            <form th:method="DELETE" th:action="@{user-delete/{id}(id=${user.getId()})}">-->
-<!--                                <input type="submit" value="Delete"/>-->
-<!--                            </form>-->
-<!--                    </tr>-->
-<!--                    </tbody>-->
-
-<!--                </table>-->
-<!--            </div>-->
-<!--            <p><a href="/admin/user-create">Create user</a></p>-->
-
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<!--модальные окна-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>

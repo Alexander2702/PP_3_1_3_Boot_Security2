@@ -12,6 +12,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.models.User;
 
 import java.util.List;
+
 @Controller
 @RequestMapping("/admin")
 @PreAuthorize("hasAnyRole('ADMIN')")
@@ -27,21 +28,24 @@ public class AdminController {
 
 
     @GetMapping()
-    public String findAll(@AuthenticationPrincipal org.springframework.security.core.userdetails.User userAuth,Model model) {
+    public String findAll(@AuthenticationPrincipal org.springframework.security.core.userdetails.User userAuth, Model model) {
         model.addAttribute("userAuth", userService.findByEmail(userAuth.getUsername()).orElseThrow());
         List<User> userList = userService.getAllUsers();
-        model.addAttribute("userList",userList);
+        model.addAttribute("userList", userList);
         model.addAttribute("rolesList", userService.getAllRoles());
         model.addAttribute("newUser", new User());
         return "user-list";
     }
-//    @GetMapping("/user-create")
+
+    //    @GetMapping("/user-create")
 //    public String newUser(Model model) {
 //        model.addAttribute("user", new User());
 //        return "user-list";
 //    }
-    @PostMapping()
-    public String createUser(@ModelAttribute("user") User user) {
+    @PostMapping
+    public String add(@ModelAttribute("newUser") User user) {  //,        @RequestParam(value = "nameRoles") String[] roles
+
+//        user.setRoles(userService.getAllRoles());
         userService.addUser(user);
         return "redirect:/admin/";
     }
@@ -51,11 +55,13 @@ public class AdminController {
         model.addAttribute("user", userService.getUserById(id));
         return "user-update";
     }
+
     @PatchMapping("/user-update/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
         userService.updateUser(user);
         return "redirect:/admin/";
     }
+
     @DeleteMapping("user-delete/{id}")
     public String delete(@PathVariable("id") int id) {
         userService.removeUserById(id);
