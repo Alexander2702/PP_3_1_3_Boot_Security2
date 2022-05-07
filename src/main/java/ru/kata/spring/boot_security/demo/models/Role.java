@@ -50,9 +50,5 @@ public class Role implements GrantedAuthority {
     public String toString() {
         return  rolesUser;
 
-//                "Role{" +
-//                "id=" + id +
-//                ", rolesUser='" + rolesUser + '\'' +
-//                '}';
     }
 }
