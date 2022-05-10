@@ -3,11 +3,11 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.models.Role;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
+
 import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.models.User;
 
@@ -19,11 +19,13 @@ import java.util.List;
 public class AdminController {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -44,8 +46,7 @@ public class AdminController {
 //    }
     @PostMapping
     public String add(@ModelAttribute("newUser") User user) {  //,        @RequestParam(value = "nameRoles") String[] roles
-
-//        user.setRoles(userService.getAllRoles());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.addUser(user);
         return "redirect:/admin/";
     }
@@ -58,6 +59,7 @@ public class AdminController {
 
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user) {  //, @PathVariable("id") int id
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.updateUser(user);
         return "redirect:/admin/";
     }
