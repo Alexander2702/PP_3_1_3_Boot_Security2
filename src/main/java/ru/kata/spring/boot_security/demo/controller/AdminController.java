@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.models.User;
 
@@ -19,13 +20,15 @@ import java.util.List;
 public class AdminController {
 
     private final UserService userService;
+    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public AdminController(UserService userService, PasswordEncoder passwordEncoder) {
+    public AdminController(UserService userService, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
 
 
@@ -34,7 +37,7 @@ public class AdminController {
         model.addAttribute("userAuth", userService.findByEmail(userAuth.getUsername()).orElseThrow());
         List<User> userList = userService.getAllUsers();
         model.addAttribute("userList", userList);
-        model.addAttribute("rolesList", userService.getAllRoles());
+        model.addAttribute("rolesList", roleService.getAllRoles());
         model.addAttribute("newUser", new User());
         return "user-list";
     }

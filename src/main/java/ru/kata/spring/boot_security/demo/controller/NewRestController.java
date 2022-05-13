@@ -9,7 +9,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class NewRestController {
 
     @Autowired
@@ -17,27 +17,27 @@ public class NewRestController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping
+    @GetMapping("/users")
     public List<User> showAllUsers() {
         return userService.getAllUsers();
     }
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public User getUserById(@PathVariable int id) {
         return userService.getUserById(id);
     }
 
-    @PostMapping
+    @PostMapping("/users")
     public void addNewUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.addUser(user);
     }
-    @PatchMapping
+    @PatchMapping("/users")
     public void updateUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.updateUser(user);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable int id) {
         userService.removeUserById(id);
     }
