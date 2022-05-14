@@ -31,7 +31,7 @@ public class NewRestController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.addUser(user);
     }
-    @PatchMapping("/users")
+    @PutMapping("/users")
     public void updateUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.updateUser(user);

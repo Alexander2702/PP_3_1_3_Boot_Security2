@@ -128,7 +128,7 @@
                                 <div class="card-body text-center ">
 
                                     <!--                                    <form th:method="POST" th:action="@{/admin}" th:object="${newUser}">-->
-                                    <form id="saveForm">
+                                    <form onsubmit="sendSaveForm(event)" id="saveForm">
                                         <div class="flex-column align-items-center">
 
                                             <div class="d-flex flex-column align-items-center mb-3">
@@ -266,37 +266,37 @@
                         <div class="form-group">
                             <label for="idEdit"><b>ID</b></label>
                             <!--                            th:value="${editUser.getId()}" строка с низу-->
-                            <input type="text" class="form-control" id="idEdit" name="id" readonly/>
+                            <input type="text" class="form-control" id="idEdit" name="id" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="firstNameEdit"><b>First Name</b></label>
                             <!--                            th:value="${editUser.getFirstName()}" th: строка с низу-->
-                            <input type="text" class="form-control" id="firstNameEdit" name="firstName"/>
+                            <input type="text" class="form-control" id="firstNameEdit" name="firstName">
                         </div>
 
                         <div class="form-group">
                             <label for="lastNameEdit"><b>Last Name</b></label>
                             <!--                            th:value="${editUser.getLastName()}" th: строка с низу-->
-                            <input type="text" class="form-control" id="lastNameEdit" name="lastName"/>
+                            <input type="text" class="form-control" id="lastNameEdit" name="lastName">
                         </div>
 
                         <div class="form-group">
                             <label for="ageEdit"><b>Age</b></label>
                             <!--                            th:value="${editUser.getAge()}" th: строка с низу-->
-                            <input type="number" class="form-control" id="ageEdit" name="age"/>
+                            <input type="number" class="form-control" id="ageEdit" name="age">
                         </div>
 
                         <div class="form-group">
                             <label for="passwordEdit"><b>Password</b></label>
                             <!--                            th:field="*{password}" строка с низу-->
-                            <input type="password" class="form-control" id="passwordEdit"/>
+                            <input type="password" class="form-control" id="passwordEdit" name="password">
                         </div>
 
                         <div class="form-group">
                             <label for="emailEdit"><b>E-mail</b></label>
                             <!--                            th:value="${editUser.getEmail()}" th: строка с низу-->
-                            <input type="text" class="form-control" id="emailEdit" name="email"/>
+                            <input type="text" class="form-control" id="emailEdit" name="email" >
                         </div>
 
                         <div class="form-group">
@@ -314,7 +314,7 @@
 
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="editClose">Close
                         </button>
-                        <button type="submit" form="editForm" class="btn btn-primary editBtn">Edit</button>
+                        <button type="submit" form="editForm" onclick="sendEditForm(event)"  class="btn btn-primary editBtn">Edit</button>
 
                     </form>
                 </div>
@@ -336,13 +336,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="deleteForm">
 
-                <div class="modal-body">
-                    <div class="row justify-content-center align-items-center text-center">
-                        <!--                    <form th:action="@{/admin/{id}(id=${deleteUser.getId()})}"-->
-                        <!--                          th:method="DELETE" th:object="${newUser}">-->
-
+            <div class="modal-body">
+                <div class="row justify-content-center align-items-center text-center">
+                    <!--                    <form th:action="@{/admin/{id}(id=${deleteUser.getId()})}"-->
+                    <!--                          th:method="DELETE" th:object="${newUser}">-->
+                    <form id="deleteForm">
                         <div class="form-group">
                             <label for="idDelete"><b>ID</b></label>
                             <!--                            th:value="${deleteUser.getId()}" строка с низу-->
@@ -389,17 +388,17 @@
                         <button type="button" class="btn btn-secondary" id="deleteFormClose" data-dismiss="modal">
                             Close
                         </button>
-                        <button type="submit" class="btn btn-danger" form="deleteForm">Delete</button>
-
-                    </div>
+                        <button type="submit" class="btn btn-danger" onclick="sendDeleteForm(event)" form="deleteForm">Delete</button>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 
 
 <!-- Подключение скриптов -->
+
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

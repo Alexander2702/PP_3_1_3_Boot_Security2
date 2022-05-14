@@ -2,7 +2,7 @@ const allUsersTableBody = document.getElementById('all-users-table-body');
 const URLUsersApi = 'http://localhost:8080/api/users';
 let users;
 
-async function loadIntoTablesBody(url, tableBody) {
+    async function loadIntoTablesBody(url, tableBody) {
     const response = await fetch(url);
     users = await response.json();
 
@@ -18,7 +18,6 @@ async function loadIntoTablesBody(url, tableBody) {
         bodyElement.appendChild(createTd(user.email));
         bodyElement.appendChild(createTd(`${user.namesOfRoles.join(', ')}`));
         const editCell = document.createElement("td");
-
         editCell.innerHTML = `
             <button type="button" onClick="editModalOpen(event, ${user.id})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
         `;
@@ -61,8 +60,7 @@ function editModalOpen(e, id) {
             reSelectRolesOption(optionSelect, data);
             fillValuesFromData(controlId, controlFirstName, controlLastName, controlAge, controlEmail, data)
             controlPassword.value = data.password
-            // $('#editModal').modal('show')
-            // $('.editBtn').modal(() => ())
+            $('#editModal').modal('show')
 
         })
 }
@@ -93,7 +91,7 @@ function deleteModalOpen(e, id) {
 
             reSelectRolesOption(optionSelect, data)
             fillValuesFromData(controlDelId, controlDelFirstName, controlDelLastName, controlDelAge, controlDelEmail, data)
-            // $('#deleteModal').modal('show')
+            $('#deleteModal').modal('show')
         })
 }
 
@@ -113,14 +111,14 @@ function reSelectRolesOption(optionSelect, data) {
     for (let i = 0; i < optionSelect.length; i++) {
         optionSelect[i].selected = false
     }
-    for (let i = 0; i < optionSelect.length; i++) {
-        data.roles.forEach(role => {
-            console.log(role, 'role')
-            if (role.name.includes(optionSelect[i].id)) {
-                optionSelect[i].selected = true
-            }
-        })
-    }
+    // for (let i = 0; i < optionSelect.length; i++) {
+    //     data.roles.forEach(role => {
+    //         console.log(role, 'role')
+    //         // if (role.name.includes(optionSelect[i].id)) {
+    //         //     optionSelect[i].selected = true
+    //         // }
+    //     })
+    // }
 }
 
 async function sendSaveForm(e) {
@@ -142,7 +140,7 @@ async function sendSaveForm(e) {
     }
     values.roles = roleArr
 
-    await fetch(URLUsersApi, {
+    await fetch('http://localhost:8080/api/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -170,8 +168,8 @@ async function sendEditForm(e) {
     }
 
     values.roles = roleArr
-    await fetch(URLUsersApi, {
-        method: 'PATCH',
+    await fetch('http://localhost:8080/api/users', {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
