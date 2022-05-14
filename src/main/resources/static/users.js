@@ -111,14 +111,6 @@ function reSelectRolesOption(optionSelect, data) {
     for (let i = 0; i < optionSelect.length; i++) {
         optionSelect[i].selected = false
     }
-    // for (let i = 0; i < optionSelect.length; i++) {
-    //     data.roles.forEach(role => {
-    //         console.log(role, 'role')
-    //         // if (role.name.includes(optionSelect[i].id)) {
-    //         //     optionSelect[i].selected = true
-    //         // }
-    //     })
-    // }
 }
 
 async function sendSaveForm(e) {
